@@ -10,60 +10,112 @@
 
 @interface CardMatchingGame()
 @property (readwrite, nonatomic) int score;
+@property (readwrite, nonatomic) NSString* statusText;
 @property (strong, nonatomic) NSMutableArray *cards; // of Card
 
 @end
 
 @implementation CardMatchingGame
 
-- (NSMutableArray *)cards
+
+- (NSMutableArray *) cards
 {
-    if (!_cards) _cards = [[NSMutableArray alloc] init ];
+    if (!_cards)
+    {
+        _cards = [[NSMutableArray alloc] init ];
+    }
     return _cards;
 }
+
+
+- (NSString*) statusText
+{
+    if (!_statusText)
+    {
+        _statusText = @" ";
+    }
+    
+    return _statusText;
+}
+
 
 #define MATCH_BONUS 4
 #define MISMATCH_PENALTY 2
 #define FLIP_COST 1
 
+
 - (void)flipCardAtIndex:(NSUInteger)index
 {
-    Card *card = [self cardAtIndex:index];
+    //
+    // Clear the status text.
+    //
+    self.statusText = @" ";
     
-    if (card && !card.isUnplayable) {
-        if (!card.isFaceUp) {
-            for (Card *otherCard in self.cards) {
-                if (otherCard.isFaceUp && !otherCard.isUnplayable) {
-                    int matchScore = [card match:@[otherCard]];
-                    if (matchScore) {
-                        NSLog(@"A match was found!");
-                        NSLog(@"Making this card unplayable.");
-                        card.unplayable = YES;
-                        NSLog(@"Making the other card unplayable.");
-                        otherCard.unplayable = YES;
-                        self.score += matchScore * MATCH_BONUS;
-                    }
-                    else {
-                        NSLog(@"No match found. :-(");
-                        NSLog(@"Making other card face down.");
-                        otherCard.faceUp = NO;
-                        self.score -= MISMATCH_PENALTY;
-                    }
-                    break;
-                }
-            }
-            self.score -= FLIP_COST;
-        }
-        if (card.isFaceUp) {
-            NSLog(@"Making this card face down.");
-        }
-        else {
-            NSLog(@"Making this card face up.");
-        }
-        card.faceUp = !card.isFaceUp;
-
+    //
+    // Check the parameters.
+    //
+    Card *card = [self cardAtIndex:index];
+    if (!card)
+    {
+        //
+        // No card at the specified index.
+        // todo:  Assert false here.
+        //
+        return;
     }
+    
+    if (card.isUnplayable)
+    {
+        //
+        // The card is unplayable.
+        // todo:  Assert false here.
+        //
+        return;
+    }
+    
+    if (card.isFaceUp)
+    {
+        //
+        // The card is currently face-up.  All we have to do it turn it face-down.
+        //
+        card.faceUp = NO;
+        return;
+    }
+    
+    //
+    // At this point we know that the card is playable and face-down.
+    //
+    for (Card *otherCard in self.cards) {
+        if (otherCard.isFaceUp && !otherCard.isUnplayable) {
+            int matchScore = [card match:@[otherCard]];
+            if (matchScore)
+            {
+                //
+                // A match was found.
+                //
+                card.unplayable = YES;
+                otherCard.unplayable = YES;
+                NSUInteger points = matchScore * MATCH_BONUS;
+                self.score += points;
+                self.statusText = [NSString stringWithFormat:@"Matched %@ and %@ for %d points!", card.contents, otherCard.contents, points];
+            }
+            else
+            {
+                //
+                // No match found.
+                //
+                otherCard.faceUp = NO;
+                NSUInteger points = MISMATCH_PENALTY;
+                self.score -= points;
+                self.statusText = [NSString stringWithFormat:@"%@ and %@ do not match!  %d point penalty!", card.contents, otherCard.contents, points];
+            }
+            break;
+        }
+    }
+    self.score -= FLIP_COST;
+    card.faceUp = YES;
 }
+
 
 - (Card *)cardAtIndex:(NSUInteger)index
 {

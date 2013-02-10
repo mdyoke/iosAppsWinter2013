@@ -17,6 +17,11 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame* game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusTextLabel;
+@property (weak, nonatomic) IBOutlet UIButton *dealButton;
+
+
+- (void)startNewGame;
 
 @end
 
@@ -33,8 +38,7 @@
 {
     if (!_game)
     {
-        _game = [[CardMatchingGame alloc]initWithCardCount:[self.cardButtons count]
-                                                 usingDeck:[[PlayingCardDeck alloc]init]];
+        [self startNewGame];
     }
     return _game;
 }
@@ -72,6 +76,7 @@
         cardButton.alpha = (card.isUnplayable? 0.3 : 1.0);
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.statusTextLabel.text = self.game.statusText;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +91,34 @@
     [self.game flipCardAtIndex:indexOfSender];
     self.flipCount++;
     [self updateUI];
+}
+
+- (IBAction)dealNewGame:(UIButton *)sender {
+    //
+    // Don't bother confirming this action with the user.  Assume that they know
+    // what they are doing.
+    //
+    
+    //
+    // Just allocate a new game object rather than trying to reset the current one's
+    // state.
+    //
+    [self startNewGame];
+    [self updateUI];
+}
+
+- (void) startNewGame
+{
+    PlayingCardDeck* newDeck = [[PlayingCardDeck alloc] init];
+    NSUInteger cardCount = [self.cardButtons count];
+    
+    _game = [[CardMatchingGame alloc] initWithCardCount:cardCount
+                                              usingDeck:newDeck];
+    
+    //
+    // Reset all state that is held in this controller.
+    //
+    self.flipCount = 0;
 }
 
 @end

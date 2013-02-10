@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Matchismo/Model/PlayingCard.m"
-         timestampString = "381810091.855316"
+         timestampString = "382218504.822376"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "95"
-         endingLineNumber = "95"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
          landmarkName = "-contents"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,24 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Matchismo/CardGameViewController.m"
-         timestampString = "381822721.882361"
+         timestampString = "382222087.737797"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
-         landmarkName = "-updateUI"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Matchismo/CardGameViewController.m"
-         timestampString = "381822721.882361"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
+         startingLineNumber = "91"
+         endingLineNumber = "91"
          landmarkName = "-flipCard:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Matchismo/Model/CardMatchingGame.m"
-         timestampString = "381821733.06279"
+         timestampString = "382219298.746977"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "100"
+         endingLineNumber = "100"
          landmarkName = "-flipCardAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Matchismo/Model/CardMatchingGame.m"
-         timestampString = "381821733.06279"
+         timestampString = "382219298.746977"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "50"
-         endingLineNumber = "50"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
          landmarkName = "-flipCardAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>

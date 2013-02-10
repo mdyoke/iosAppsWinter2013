@@ -38,25 +38,39 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-- (int)match:(NSArray*)otherCards
+- (int)match:(NSArray*) otherCards
 {
     int score = 0;
     
-    if ([otherCards count] == 1) {
+    if ([otherCards count] == 1)
+    {
         PlayingCard* otherCard = [otherCards lastObject];
-        if ([otherCard.suit isEqualToString:self.suit]) {
+        if ([otherCard.suit isEqualToString:self.suit])
+        {
+            //
+            // The suits match.  This is an easy match and earns relatively
+            // few points.
+            //
             score = 1;
         }
-        else if (otherCard.rank == self.rank) {
+        else if (otherCard.rank == self.rank)
+        {
+            //
+            // The rank matches.  This is relatively difficult, so it earns
+            // a relatively large number of points.
+            //
             score = 4;
+        }
+        else
+        {
+            //
+            // The cards do not match at all.
+            score = 0;
         }
     }
     
     return score;
 }
-
-
-
 
 
 

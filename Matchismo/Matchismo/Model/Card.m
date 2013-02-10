@@ -16,8 +16,19 @@
     
     for (Card *card in otherCards)
     {
-        if ([card.contents isEqualToString:self.contents]) {
+        if ([card.contents isEqualToString:self.contents])
+        {
+            //
+            // The cards match.
+            //
             score = 1;
+        }
+        else
+        {
+            //
+            // The cards do not match.
+            //
+            score = 0;
         }
     }
     
