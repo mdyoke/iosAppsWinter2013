@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusTextLabel;
 @property (weak, nonatomic) IBOutlet UIButton *dealButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *matchModeSegmentedControl;
 
 
 - (void)startNewGame;
@@ -47,8 +48,7 @@
 - (void)setFlipCount:(int)flipCount
 {
     _flipCount = flipCount;
-    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
-    NSLog(@"flipCount updated to %d", self.flipCount);
+    
 }
 
 - (void)setCardButtons:(NSArray *)cardButtons
@@ -57,33 +57,19 @@
     [self updateUI];
 }
 
-- (void)updateUI
+- (void)setMatchModeSegmentedControl:(UISegmentedControl *)matchModeSegmentedControl
 {
-    for (UIButton* cardButton in self.cardButtons) {
-        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
-
-        // Set the title of the card for the selected and disabled states.
-        NSString* cardContents = card.contents;
-        [cardButton setTitle:cardContents
-                    forState:UIControlStateSelected|UIControlStateDisabled];
-        [cardButton setTitle:cardContents
-                    forState:UIControlStateSelected];
-        [cardButton setTitle:cardContents
-                    forState:UIControlStateDisabled];
-        
-        cardButton.selected = card.isFaceUp;
-        cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = (card.isUnplayable? 0.3 : 1.0);
-    }
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    self.statusTextLabel.text = self.game.statusText;
+    _matchModeSegmentedControl = matchModeSegmentedControl;
+    [self updateUIMatchModeSegmentControl];
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Instance Methods
+// Actions
 //
 ////////////////////////////////////////////////////////////////////////////////
+
 
 - (IBAction)flipCard:(UIButton *)sender
 {
@@ -92,6 +78,7 @@
     self.flipCount++;
     [self updateUI];
 }
+
 
 - (IBAction)dealNewGame:(UIButton *)sender {
     //
@@ -107,6 +94,20 @@
     [self updateUI];
 }
 
+- (IBAction)onMatchModeChanged:(UISegmentedControl *)sender {
+    NSUInteger selectedIndex = self.matchModeSegmentedControl.selectedSegmentIndex;
+    MatchMode newMatchMode = (selectedIndex == 0? MatchMode2Card: MatchMode3Card);
+    self.game.matchMode = newMatchMode;
+    
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Helper Methods
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
 - (void) startNewGame
 {
     PlayingCardDeck* newDeck = [[PlayingCardDeck alloc] init];
@@ -120,5 +121,48 @@
     //
     self.flipCount = 0;
 }
+
+
+- (void)updateUI
+{
+    //
+    // Update the state of each card button.
+    //
+    for (UIButton* cardButton in self.cardButtons) {
+        Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        
+        // Set the title of the card for the selected and disabled states.
+        NSString* cardContents = card.contents;
+        [cardButton setTitle:cardContents
+                    forState:UIControlStateSelected|UIControlStateDisabled];
+        [cardButton setTitle:cardContents
+                    forState:UIControlStateSelected];
+        [cardButton setTitle:cardContents
+                    forState:UIControlStateDisabled];
+        
+        cardButton.selected = card.isFaceUp;
+        cardButton.enabled = !card.isUnplayable;
+        cardButton.alpha = (card.isUnplayable? 0.3 : 1.0);
+    }
+    
+    //
+    // Update the state of the other non-card controls in the view.
+    //
+    self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.statusTextLabel.text = self.game.statusText;
+    self.matchModeSegmentedControl.enabled = !self.game.isGameInProgress;
+    [self updateUIMatchModeSegmentControl];
+}
+
+
+- (void) updateUIMatchModeSegmentControl
+{
+    MatchMode currentMatchMode = self.game.matchMode;
+    NSUInteger selectedSegmentIndex = (currentMatchMode == MatchMode2Card? 0: 1);
+    self.matchModeSegmentedControl.selectedSegmentIndex = selectedSegmentIndex;
+}
+
+
 
 @end

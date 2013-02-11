@@ -10,18 +10,35 @@
 #import "Card.h"
 #import "Deck.h"
 
+typedef enum {
+    MatchMode2Card,
+    MatchMode3Card
+    
+} MatchMode;
+
+
 @interface CardMatchingGame : NSObject
 
-// designated initializer (must be called)
+////////////////////////////////////////
+// Instance Properties
+////////////////////////////////////////
+@property (readonly, nonatomic) int score;
+@property (readonly, nonatomic) NSString* statusText;
+@property (readonly, nonatomic, getter=isGameInProgress) BOOL gameInProgress;
+@property (nonatomic) MatchMode matchMode;
+
+////////////////////////////////////////
+// Instance Methods
+////////////////////////////////////////
+
+// Designated initializer
 - (id)initWithCardCount:(NSUInteger)count
               usingDeck:(Deck *)deck;
 
+
 - (void)flipCardAtIndex:(NSUInteger)index;
 
+
 - (Card *)cardAtIndex:(NSUInteger)index;
-
-@property (readonly, nonatomic) int score;
-@property (readonly, nonatomic) NSString* statusText;
-
 
 @end

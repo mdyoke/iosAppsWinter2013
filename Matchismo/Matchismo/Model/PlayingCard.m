@@ -31,48 +31,11 @@
     return [self rankStrings].count - 1;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Instance Properties
 //
 ////////////////////////////////////////////////////////////////////////////////
-
-- (int)match:(NSArray*) otherCards
-{
-    int score = 0;
-    
-    if ([otherCards count] == 1)
-    {
-        PlayingCard* otherCard = [otherCards lastObject];
-        if ([otherCard.suit isEqualToString:self.suit])
-        {
-            //
-            // The suits match.  This is an easy match and earns relatively
-            // few points.
-            //
-            score = 1;
-        }
-        else if (otherCard.rank == self.rank)
-        {
-            //
-            // The rank matches.  This is relatively difficult, so it earns
-            // a relatively large number of points.
-            //
-            score = 4;
-        }
-        else
-        {
-            //
-            // The cards do not match at all.
-            score = 0;
-        }
-    }
-    
-    return score;
-}
-
-
 
 // Because we provide the setter and getter for this property.
 @synthesize suit = _suit;
@@ -99,16 +62,73 @@
     }
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Instance Methods
+// Overrides
 //
 ////////////////////////////////////////////////////////////////////////////////
+
 - (NSString *)contents
 {
     NSArray* rankStrings = [PlayingCard rankStrings];
     return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
+
+
+- (int)match:(NSArray*) otherCards
+{
+    NSUInteger numOtherCards = [otherCards count];
+    
+    if ([self rankMatchesOthers:otherCards])
+    {
+        return powl(2, numOtherCards) * 5;
+    }
+    else if ([self suitMatchesOthers:otherCards])
+    {
+        return powl(2, numOtherCards) * 2;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Helper Methods
+//
+////////////////////////////////////////////////////////////////////////////////
+
+- (BOOL) rankMatchesOthers:(NSArray*) others
+{
+    for (PlayingCard* curOtherCard in others)
+    {
+        if (curOtherCard.rank != self.rank)
+        {
+            return NO;
+        }
+    }
+    
+    // If we got here, all ranks match.
+    return YES;
+}
+
+- (BOOL) suitMatchesOthers:(NSArray*) others
+{
+    for (PlayingCard* curOtherCard in others)
+    {
+        if (![curOtherCard.suit isEqualToString:self.suit])
+        {
+            return NO;
+        }
+    }
+    
+    // If we got here, all suits match.
+    return YES;
+}
+
 
 
 @end

@@ -11,28 +11,17 @@
 @implementation Card
 
 - (int)match:(NSArray *)otherCards
-{
-    int score = 0;
-    
-    for (Card *card in otherCards)
-    {
-        if ([card.contents isEqualToString:self.contents])
-        {
-            //
-            // The cards match.
-            //
-            score = 1;
-        }
-        else
-        {
-            //
-            // The cards do not match.
-            //
-            score = 0;
+{    
+    for (Card* curCard in otherCards) {
+        if (![curCard.contents isEqualToString:self.contents]) {
+            // The current other card is not equal to this card.  Award 0 points.
+            return 0;
         }
     }
     
-    return score;
+    // If we got here, then the contents of all cards are equal.
+    // Award 1 point.
+    return 1;
 }
 
 @end
