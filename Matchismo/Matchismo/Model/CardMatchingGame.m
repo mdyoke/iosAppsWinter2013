@@ -150,11 +150,8 @@
     
     //
     // At this point, we know that the specified card is playable and face-down.
-    // Let's turn it over.
     //
-    card.faceUp = YES;
-    self.score -= FLIP_COST;
-    
+
     NSMutableArray* faceUpCards = [[NSMutableArray alloc] init];
     NSMutableArray* faceUpCardsContents = [[NSMutableArray alloc] init];
     for (Card* curCard in self.cards)
@@ -167,21 +164,17 @@
     }
     NSString* faceUpCardsString = [faceUpCardsContents componentsJoinedByString:@", "];
     
-    NSUInteger faceUpCardsNeeded = (self.matchMode == MatchMode2Card? 2: 3);
+    NSUInteger faceUpCardsNeeded = (self.matchMode == MatchMode2Card? 1: 2);
     
     if (faceUpCardsNeeded == [faceUpCards count]) {
         
-        // Remove a single card from the container of face-up cards.  This card will be responsible
-        // for evaluating the match.
-        Card* lastCard = faceUpCards[faceUpCards.count - 1];
-        [faceUpCards removeLastObject];
-        NSUInteger matchScore = [lastCard match:faceUpCards];
+        NSUInteger matchScore = [card match:faceUpCards];
         if (matchScore > 0)
         {
             // A match was found.
             
             // Make all cards involved unplayable.
-            lastCard.unplayable = YES;
+            card.unplayable = YES;
             for (Card* otherCard in faceUpCards) {
                 otherCard.unplayable = YES;
             }
@@ -191,7 +184,7 @@
             self.score += points;
             
             // Set the status text.
-            self.statusText = [NSString stringWithFormat:@"Matched for %d points: %@.", points, faceUpCardsString];
+            self.statusText = [NSString stringWithFormat:@"Matched %@ and %@ for %d points!", faceUpCardsString, card.contents, points];
         }
         else
         {
@@ -207,9 +200,13 @@
             self.score -= points;
             
             // Set the status text.
-            self.statusText = [NSString stringWithFormat:@"No match!  %d point penalty: %@", points, faceUpCardsString];
+            self.statusText = [NSString stringWithFormat:@"No match found for %@ and %@.  Lost %d points.", faceUpCardsString, card.contents, points];
         }
-    }    
+    }
+    
+    // Turn the specified card over.
+    card.faceUp = YES;
+    self.score -= FLIP_COST;
 }
 
 
