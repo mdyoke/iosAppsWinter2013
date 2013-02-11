@@ -10,8 +10,8 @@
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 
+////////////////////////////////////////////////////////////////////////////////
 @interface CardGameViewController ()
-
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -20,11 +20,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusTextLabel;
 @property (weak, nonatomic) IBOutlet UIButton *dealButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *matchModeSegmentedControl;
-
+@property (strong, nonatomic) UIImage* cardBackImage;
 
 - (void)startNewGame;
-
 @end
+
 
 @implementation CardGameViewController
 
@@ -61,6 +61,14 @@
 {
     _matchModeSegmentedControl = matchModeSegmentedControl;
     [self updateUIMatchModeSegmentControl];
+}
+
+- (UIImage*)cardBackImage
+{
+    if (!_cardBackImage) {
+        _cardBackImage = [UIImage imageNamed:@"wtf.jpg"];
+    }
+    return _cardBackImage;
 }
 
 
@@ -143,6 +151,16 @@
         cardButton.selected = card.isFaceUp;
         cardButton.enabled = !card.isUnplayable;
         cardButton.alpha = (card.isUnplayable? 0.3 : 1.0);
+        
+        cardButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+        
+        UIImage* backImage = nil;
+        if (!card.isUnplayable && !card.isFaceUp) {
+            backImage = self.cardBackImage;
+        }
+        
+        [cardButton setImage:backImage forState:UIControlStateNormal];
+        
     }
     
     //

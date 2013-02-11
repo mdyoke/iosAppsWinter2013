@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Matchismo/CardGameViewController.m"
-         timestampString = "382226694.387592"
+         timestampString = "382243901.411297"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
          landmarkName = "-flipCard:"
          landmarkType = "5">
       </FileBreakpoint>

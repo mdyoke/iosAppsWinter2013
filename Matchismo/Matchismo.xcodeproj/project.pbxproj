@@ -23,6 +23,7 @@
 		1BB3A03516BB767D001E3989 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3A03416BB767D001E3989 /* Deck.m */; };
 		1BB3A03816BB76EA001E3989 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3A03716BB76EA001E3989 /* PlayingCard.m */; };
 		1BB3A03B16BB7703001E3989 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3A03A16BB7703001E3989 /* PlayingCardDeck.m */; };
+		1BD581AB16C8919A0007F0D0 /* wtf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1BD581AA16C8919A0007F0D0 /* wtf.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		1BB3A03716BB76EA001E3989 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
 		1BB3A03916BB7703001E3989 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
 		1BB3A03A16BB7703001E3989 /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
+		1BD581AA16C8919A0007F0D0 /* wtf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = wtf.jpg; path = resources/wtf.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		1B524D7F16BB65170089101F /* Matchismo */ = {
 			isa = PBXGroup;
 			children = (
+				1BD581A816C891380007F0D0 /* Resources */,
 				1B524D8816BB65170089101F /* CardGameAppDelegate.h */,
 				1B524D8916BB65170089101F /* CardGameAppDelegate.m */,
 				1B524D9116BB65180089101F /* MainStoryboard.storyboard */,
@@ -138,6 +141,14 @@
 				1BB3A03A16BB7703001E3989 /* PlayingCardDeck.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		1BD581A816C891380007F0D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1BD581AA16C8919A0007F0D0 /* wtf.jpg */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +208,7 @@
 				1B524D8E16BB65180089101F /* Default@2x.png in Resources */,
 				1B524D9016BB65180089101F /* Default-568h@2x.png in Resources */,
 				1B524D9316BB65180089101F /* MainStoryboard.storyboard in Resources */,
+				1BD581AB16C8919A0007F0D0 /* wtf.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
